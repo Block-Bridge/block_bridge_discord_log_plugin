@@ -1,21 +1,33 @@
 package me.quickscythe.discord.plugins;
 
+import me.quickscythe.api.BotPlugin;
+import me.quickscythe.api.config.ConfigFileManager;
+import me.quickscythe.api.event.PlayerJoinEvent;
+import me.quickscythe.api.event.PlayerLeaveEvent;
+import me.quickscythe.api.event.ServerStatusChangeEvent;
+import me.quickscythe.api.listener.Listener;
 import me.quickscythe.utils.BlockBridgeDiscordUtils;
-import me.quickscythe.utils.listeners.Listener;
 
 public class LogListener implements Listener.StatusListener,Listener.LeaveListener,Listener.JoinListener {
+
+    private final BotPlugin plugin;
+
+    public LogListener(BotPlugin plugin){
+        this.plugin = plugin;
+        BlockBridgeDiscordUtils.getMain().getApi().getWebApp().addListener(plugin, this);
+    }
     @Override
-    public void onJoin(String s, String s1, String s2) {
-        BlockBridgeDiscordUtils.getLogger().log("User " + s + " joined the server");
+    public void onJoin(PlayerJoinEvent e) {
+        BlockBridgeDiscordUtils.getLogger().log(ConfigFileManager.getFile(plugin, "config").getData().getString("join_message"), e.getPlayer());
     }
 
     @Override
-    public void onLeave(String s, String s1, String s2) {
-
+    public void onLeave(PlayerLeaveEvent e) {
+        BlockBridgeDiscordUtils.getLogger().log(ConfigFileManager.getFile(plugin, "config").getData().getString("leave_message"), e.getPlayer());
     }
 
     @Override
-    public void onStatusChange(String s, String s1, String s2) {
-
+    public void onStatusChange(ServerStatusChangeEvent e) {
+        BlockBridgeDiscordUtils.getLogger().log("Server Status: " + e.getStatus());
     }
 }
