@@ -2,13 +2,16 @@ package me.quickscythe.discord.plugins;
 
 import me.quickscythe.api.BotPlugin;
 import me.quickscythe.api.config.ConfigFileManager;
+import me.quickscythe.api.event.PlayerChatEvent;
 import me.quickscythe.api.event.PlayerJoinEvent;
 import me.quickscythe.api.event.PlayerLeaveEvent;
 import me.quickscythe.api.event.ServerStatusChangeEvent;
 import me.quickscythe.api.listener.Listener;
 import me.quickscythe.utils.BlockBridgeDiscordUtils;
 
-public class LogListener implements Listener.StatusListener,Listener.LeaveListener,Listener.JoinListener {
+import java.awt.*;
+
+public class LogListener implements Listener.StatusListener,Listener.LeaveListener,Listener.JoinListener, Listener.ChatListener {
 
     private final BotPlugin plugin;
 
@@ -18,16 +21,21 @@ public class LogListener implements Listener.StatusListener,Listener.LeaveListen
     }
     @Override
     public void onJoin(PlayerJoinEvent e) {
-        BlockBridgeDiscordUtils.getLogger().log(ConfigFileManager.getFile(plugin, "config").getData().getString("join_message"), e.getPlayer());
+        BlockBridgeDiscordUtils.getLogger().log(ConfigFileManager.getFile(plugin, "config").getData().getString("join_message"), e.getPlayer().getName());
     }
 
     @Override
     public void onLeave(PlayerLeaveEvent e) {
-        BlockBridgeDiscordUtils.getLogger().log(ConfigFileManager.getFile(plugin, "config").getData().getString("leave_message"), e.getPlayer());
+        BlockBridgeDiscordUtils.getLogger().log(ConfigFileManager.getFile(plugin, "config").getData().getString("leave_message"), e.getPlayer().getName());
     }
 
     @Override
     public void onStatusChange(ServerStatusChangeEvent e) {
         BlockBridgeDiscordUtils.getLogger().log("Server Status: " + e.getStatus());
+    }
+
+    @Override
+    public void onPlayerChat(PlayerChatEvent playerChatEvent) {
+        BlockBridgeDiscordUtils.getLogger().log("Chat: " + playerChatEvent.getPlayer().getName() + " - " + playerChatEvent.getMessage());
     }
 }
