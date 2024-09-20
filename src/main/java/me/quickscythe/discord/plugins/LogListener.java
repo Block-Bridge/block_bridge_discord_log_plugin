@@ -2,10 +2,10 @@ package me.quickscythe.discord.plugins;
 
 import me.quickscythe.api.BotPlugin;
 import me.quickscythe.api.config.ConfigFileManager;
-import me.quickscythe.api.event.PlayerChatEvent;
-import me.quickscythe.api.event.PlayerJoinEvent;
-import me.quickscythe.api.event.PlayerLeaveEvent;
-import me.quickscythe.api.event.ServerStatusChangeEvent;
+import me.quickscythe.api.event.minecraft.PlayerChatEvent;
+import me.quickscythe.api.event.minecraft.PlayerJoinEvent;
+import me.quickscythe.api.event.minecraft.PlayerLeaveEvent;
+import me.quickscythe.api.event.minecraft.ServerStatusChangeEvent;
 import me.quickscythe.api.listener.Listener;
 import me.quickscythe.utils.BlockBridgeDiscordUtils;
 
