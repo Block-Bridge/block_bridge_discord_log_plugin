@@ -8,6 +8,7 @@ import me.quickscythe.api.event.minecraft.PlayerLeaveEvent;
 import me.quickscythe.api.event.minecraft.ServerStatusChangeEvent;
 import me.quickscythe.api.listener.Listener;
 import me.quickscythe.utils.BlockBridgeDiscordUtils;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 
@@ -36,6 +37,12 @@ public class LogListener implements Listener.StatusListener,Listener.LeaveListen
 
     @Override
     public void onPlayerChat(PlayerChatEvent playerChatEvent) {
-        BlockBridgeDiscordUtils.getLogger().log("Chat: " + playerChatEvent.getPlayer().getName() + " - " + playerChatEvent.getMessage());
+        String message = "Chat: " + playerChatEvent.getPlayer().getName() + " - " + playerChatEvent.getMessage();
+        BlockBridgeDiscordUtils.getMain().getBot().getLogsChannel().sendMessageEmbeds(
+                new EmbedBuilder()
+                        .setColor(Color.GREEN)
+                        .setTitle("INFO")
+                        .setDescription(message).build())
+                .queue();
     }
 }

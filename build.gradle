@@ -18,6 +18,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation "me.quickscythe:block_bridge_discord:${block_bridge_discord_version}"
     implementation "me.quickscythe:block_bridge_api:${block_bridge_api_version}"
+    implementation("net.dv8tion:JDA:$jda_version")
 }
 
 test {
